@@ -4,24 +4,23 @@ Aplicación web de seguimiento analítico en tiempo real para la sesión legisla
 
 ## Arquitectura
 
-El proyecto está dividido en dos servicios principales:
+El proyecto utiliza una estructura donde **Next.js (Frontend)** se encuentra en la raíz para facilitar el despliegue en Vercel, y el **Backend** en un subdirectorio dedicado.
 
-1.  **Backend (`/backend`)**:
-    *   **Framework**: FastAPI (Python 3.11+)
-    *   **Función**: Ingesta de audio (yt-dlp), Simulación de análisis LLM, WebSocket Server.
-    *   **Despliegue Recomendado**: Railway, Render, Fly.io (requiere persistencia para WebSocket y procesos de fondo).
-
-2.  **Frontend (`/frontend`)**:
+1.  **Frontend (Raíz)**:
     *   **Framework**: Next.js 14+ (React, Tailwind CSS)
     *   **Función**: Dashboard de visualización en tiempo real.
-    *   **Despliegue Recomendado**: Vercel.
+    *   **Despliegue**: Vercel (Auto-detectado al conectar el repositorio).
+
+2.  **Backend (`/backend`)**:
+    *   **Framework**: FastAPI (Python 3.11+)
+    *   **Función**: Ingesta de audio (yt-dlp), Simulación de análisis LLM, WebSocket Server.
+    *   **Despliegue Recomendado**: Railway, Render, Fly.io (Root Directory: `backend`).
 
 ## Instalación y Ejecución Local
 
 ### Prerrequisitos
 - Python 3.11+
 - Node.js 18+
-- ffmpeg (opcional, recomendado para procesamiento de audio real)
 
 ### Backend
 ```bash
@@ -34,7 +33,7 @@ uvicorn main:app --reload
 
 ### Frontend
 ```bash
-cd frontend
+# En la raíz del proyecto
 npm install
 npm run dev
 ```
@@ -46,15 +45,10 @@ Ejecutar el script `start_local.sh` (o equivalente en PowerShell) en la raíz de
 
 ### Frontend (Vercel)
 1.  Conectar el repositorio a Vercel.
-2.  Configurar el "Root Directory" a `frontend`.
-3.  Agregar variable de entorno `NEXT_PUBLIC_WS_URL` apuntando a la URL del backend desplegado (ej. `wss://mi-backend.up.railway.app/ws/live-feed`).
+2.  **Configuración Automática**: Vercel detectará Next.js en la raíz. No es necesario cambiar el "Root Directory".
+3.  Agregar variable de entorno `NEXT_PUBLIC_WS_URL` apuntando a la URL del backend desplegado.
 
 ### Backend (Railway/Render)
 1.  Conectar el repositorio.
-2.  Configurar el "Root Directory" a `backend`.
+2.  **Importante**: Configurar el "Root Directory" a `backend` en las settings del servicio.
 3.  Comando de inicio: `uvicorn main:app --host 0.0.0.0 --port $PORT`.
-
-## Variables de Entorno
-
-Crear un archivo `.env` en `backend/` si es necesario (actualmente no requerido para modo simulación).
-En `frontend/`, usar `.env.local` para `NEXT_PUBLIC_WS_URL`.

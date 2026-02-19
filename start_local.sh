@@ -26,7 +26,7 @@ BACKEND_PID=$!
 
 # Start Frontend
 echo "Starting Frontend..."
-cd ../frontend
+cd .. # Go back to root (where frontend is now)
 npm run dev &
 FRONTEND_PID=$!
 
