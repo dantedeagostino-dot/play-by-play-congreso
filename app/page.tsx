@@ -82,26 +82,18 @@ export default function Home() {
         {/* Left Column: Dashboard (2/3 width on large screens) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Aquí iría el reproductor de video si tuviéramos uno embebido */}
-          <div className="aspect-video bg-black rounded-lg border border-slate-800 flex items-center justify-center relative overflow-hidden group">
-            {/* Placeholder para iframe de YouTube */}
-            <div className="absolute inset-0 bg-slate-900/80 flex flex-col items-center justify-center text-slate-500">
-              <svg className="w-16 h-16 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              <p>Transmisión en Vivo</p>
-              <p className="text-xs mt-1 text-slate-600">(Simulación de Stream)</p>
-            </div>
-            {/* Si tuviéramos embed real:
-             <iframe 
-               width="100%" 
-               height="100%" 
-               src="https://www.youtube.com/embed/BmDLmq7aeko?autoplay=1&mute=1" 
-               title="YouTube video player" 
-               frameBorder="0" 
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-               allowFullScreen
-             ></iframe>
-             */}
+          {/* YouTube Feed */}
+          <div className="aspect-video bg-black rounded-lg border border-slate-800 flex items-center justify-center relative overflow-hidden group shadow-2xl">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/BmDLmq7aeko?autoplay=1&mute=1&playsinline=1"
+              title="Transmisión en Vivo Cámara de Diputados"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            ></iframe>
           </div>
 
           <Dashboard events={events} />
